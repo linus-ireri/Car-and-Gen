@@ -9,14 +9,14 @@ if (!process.env.OPENROUTER_API_KEY) {
 const RAG_SERVER_URL = process.env.RAG_SERVER_URL; // optional: if missing, we'll skip RAG and use LLM fallback
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const GREETING_RESPONSES = {
-  "who are you": "I am Civic, an AI assistant specializing in Kenyan legislation and policy information. How can I assist you today?",
-  "hello": "Hello! I am Civic your legislative information assistant. How can I help you?",
-  "hi": "Hi there! I am Civic, your legislative information assistant. How can I help you?",
-  "hey": "Hello! I am Civic, your legislative information assistant. How can I help you?",
-  "how are you": "I'm here to help you with questions about Kenyan legislation and policy. What would you like to know?",
-  "good morning": "Good morning! I am Civic, your legislative information assistant. How can I help you?",
-  "good afternoon": "Good afternoon! I am Civic, your legislative information assistant. How can I help you?",
-  "good evening": "Good evening! I am Civic, your legislative information assistant. How can I help you?"
+  "who are you": "I am Car&Gen.AI, the official assistant for Car and General Kenya Ltd. I can help with products, services, branches, contacts, warranties, and spare parts. How can I assist you today?",
+  "hello": "Hello! Welcome to Car&Gen.AI. Ask me about Car & General products, services, branches, contact information, warranties, or spare parts.",
+  "hi": "Hi there! You're chatting with Car&Gen.AI. How can I help with Car & General today?",
+  "hey": "Hello! This is Car&Gen.AI — I can answer questions about Car & General products, services, branches, contacts, warranties, and spare parts.",
+  "how are you": "I'm here to help with Car & General questions — what would you like to know about our products or services?",
+  "good morning": "Good morning! Car&Gen.AI at your service — would you like branch locations, product info, or warranty details?",
+  "good afternoon": "Good afternoon! Car&Gen.AI can help with Car & General products, service centres, spare parts, and warranties.",
+  "good evening": "Good evening! Ask me about Car & General products, branches, contact info, warranties, or spare parts."
 };
 
 // --- System prompt (hard-coded) ---

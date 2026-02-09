@@ -1,24 +1,24 @@
 const axios = require('axios');
 
 const greetingResponses = {
-  "who are you": "I am Huduma, an AI assistant specializing in Kenyan legislation and policy information. How can I assist you today?",
-  "who are you?": "I am Huduma, an AI assistant specializing in Kenyan legislation and policy information. How can I assist you today?",
-  "hello": "Hello! I am Huduma, your legislative information assistant. How can I help you?",
-  "hi": "Hi there! I am Huduma, your legislative information assistant. How can I help you?",
-  "hey": "Hello! I am Huduma, your legislative information assistant. How can I help you?",
-  "how are you": "I'm here to help you with questions about Kenyan legislation and policy. What would you like to know?",
-  "how are you?": "I'm here to help you with questions about Kenyan legislation and policy. What would you like to know?",
-  "good morning": "Good morning! I am Huduma, your legislative information assistant. How can I help you?",
-  "good afternoon": "Good afternoon! I am Huduma, your legislative information assistant. How can I help you?",
-  "good evening": "Good evening! I am Huduma, your legislative information assistant. How can I help you?"
+  "who are you": "I am Car&Gen.AI, the official assistant for Car and General Kenya Ltd. I can help with products, services, branches, contacts, warranties, and spare parts. How can I assist you today?",
+  "who are you?": "I am Car&Gen.AI, the official assistant for Car and General Kenya Ltd. I can help with products, services, branches, contacts, warranties, and spare parts. How can I assist you today?",
+  "hello": "Hello! Welcome to Car&Gen.AI. Ask me about Car & General products, services, branches, contact information, warranties, or spare parts.",
+  "hi": "Hi there! You're chatting with Car&Gen.AI. How can I help with Car & General today?",
+  "hey": "Hello! This is Car&Gen.AI — I can answer questions about Car & General products, services, branches, contacts, warranties, and spare parts.",
+  "how are you": "I'm here to help with Car & General questions — what would you like to know about our products or services?",
+  "how are you?": "I'm here to help with Car & General questions — what would you like to know about our products or services?",
+  "good morning": "Good morning! Car&Gen.AI at your service — would you like branch locations, product info, or warranty details?",
+  "good afternoon": "Good afternoon! Car&Gen.AI can help with Car & General products, service centres, spare parts, and warranties.",
+  "good evening": "Good evening! Ask me about Car & General products, branches, contact info, warranties, or spare parts."
 };
 
-// Common legislative queries - basic info only, detailed answers come from RAG
+// Common Car & General queries - basic info only, detailed answers come from RAG
 const commonQueries = {
-  "what do you do": "I assist with questions about Kenyan legislation and policy, including information about various acts and bills.",
-  "how can you help": "I can provide information about Kenyan laws, policies, and legislative documents. Feel free to ask about specific acts or bills.",
-  "what information do you have": "I have information about various Kenyan laws and policies, including the Computer Misuse and Cybercrimes Act and the Privatization Act.",
-  "help": "I can help you understand Kenyan legislation and policies. Just ask about a specific law, act, or policy you'd like to learn about."
+  "what do you do": "I assist with questions about Car and General Kenya Ltd, including products, services, branches, contacts, warranties, and spare parts.",
+  "how can you help": "I can provide information about Car & General products, services, locations, contact details, warranties, and spare parts. Feel free to ask!",
+  "what information do you have": "I have information about Car & General Kenya Ltd's products, service branches, contact information, warranties, and spare parts availability.",
+  "help": "I can help you with Car & General questions. Ask about our products, service centres, branches, contact information, warranties, or spare parts."
 };
 
 exports.handler = async function(event, context) {
@@ -136,13 +136,7 @@ async function processMessage(message, from) {
       if (!process.env.OPENROUTER_API_KEY) {
         throw new Error("OPENROUTER_API_KEY not set in environment");
       }
-      const systemPrompt = `You are Huduma, an AI assistant specializing in Kenyan legislation and policy information. Your responses must:
-1. Be based ONLY on the retrieved context provided
-2. Cite specific acts, bills, or policies when they are referenced
-3. Say "I don't have enough information about that in my knowledge base" if the context doesn't contain relevant information
-4. Be clear and precise, avoiding speculation or inference
-5. Focus solely on legislative and policy information
-Never identify yourself as an AI model or mention any model providers. Maintain a professional, informative tone.`;
+      const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd, including products, services, branches, contact information, warranties, spare parts, and company operations. Use a concise, professional tone. Do not answer questions unrelated to Car and General; politely state you cannot help with unrelated topics. Never identify yourself as an AI model or mention model providers.`;
       const messages = [
         { role: "system", content: systemPrompt },
         { role: "user", content: `Official information: ${allFaqs}` },
@@ -194,13 +188,7 @@ Never identify yourself as an AI model or mention any model providers. Maintain 
         if (!process.env.OPENROUTER_API_KEY) {
           throw new Error("OPENROUTER_API_KEY not set in environment");
         }
-        const systemPrompt = `You are Huduma, an AI assistant specializing in Kenyan legislation and policy information. Your responses must:
-1. Be based ONLY on the retrieved context provided
-2. Cite specific acts, bills, or policies when they are referenced
-3. Say "I don't have enough information about that in my knowledge base" if the context doesn't contain relevant information
-4. Be clear and precise, avoiding speculation or inference
-5. Focus solely on legislative and policy information
-Never identify yourself as an AI model or mention any model providers. Maintain a professional, informative tone.`;
+        const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd, including products, services, branches, contact information, warranties, spare parts, and company operations. Base answers ONLY on the retrieved context provided. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels. Never identify yourself as an AI model or mention model providers.`;
         const messages = [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Retrieved context: ${Array.isArray(retrievedContext) ? retrievedContext.join(" ") : retrievedContext}` },
@@ -234,7 +222,7 @@ Never identify yourself as an AI model or mention any model providers. Maintain 
       if (!process.env.OPENROUTER_API_KEY) {
         throw new Error("OPENROUTER_API_KEY not set in environment");
       }
-      const systemPrompt = `You are Lino.AI Assistant. Only identify yourself as Lino.AI Assistant if the user explicitly asks who you are or similar. Never say you are a language model, AI model, or mention Mistral or any other provider. Never say you were created by Mistral or anyone else. You must answer using ONLY the official information provided below. Do not speculate, do not introduce yourself, do not use general knowledge, and do not say you don't know if the information is present. If the information is not present, say you do not have official information. Always try to follow up on the current conversation and maintain context if possible.`;
+      const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd using the official information provided. Do not speculate and do not use general knowledge. If the information is not present, say you do not have official information. Never identify yourself as an AI model or mention model providers.`;
       const messages = [
         { role: "system", content: systemPrompt },
         { role: "user", content: `Official information: ${allFaqs}` },
@@ -266,11 +254,7 @@ Never identify yourself as an AI model or mention any model providers. Maintain 
       if (!process.env.OPENROUTER_API_KEY) {
         throw new Error("OPENROUTER_API_KEY not set in environment");
       }
-      const systemPrompt = `You are Huduma, an AI assistant specializing in Kenyan legislation and policy information. Since no context is available for this query:
-1. Politely explain that you can only provide information about legislation and policy that is in your knowledge base
-2. Suggest that the user try rephrasing their question to focus on specific acts, bills, or policies
-3. Maintain a professional, helpful tone
-Never identify yourself as an AI model or mention any model providers.`;
+      const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Since no context is available for this query, politely explain that you can only answer questions about Car and General based on available information, and suggest contacting official channels or providing specific product/branch/warranty details. Never identify yourself as an AI model or mention model providers.`;
       const messages = [
         { role: "system", content: systemPrompt },
         { role: "user", content: message }

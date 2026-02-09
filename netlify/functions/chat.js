@@ -57,7 +57,7 @@ exports.handler = async function (event, context) {
           body: JSON.stringify({
             model: "mistralai/mistral-7b-instruct:free",
             messages: [
-              { role: "system", content: `You are Civic, an AI assistant specializing in Kenyan legislation and policy information. Be precise, cite acts when relevant, and say you lack info if context is missing.` },
+              { role: "system", content: `You are the official Car&Gen.AI assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd, including products, services, branches, contact information, warranties, spare parts, and company operations. Use a concise, professional tone. Do not answer questions unrelated to Car and General; politely state you cannot help with unrelated topics and, when appropriate, suggest contacting Car & General's official channels. Never identify yourself as an AI model or mention model providers.` },
               { role: "user", content: userMessage }
             ]
           }),
@@ -91,7 +91,7 @@ exports.handler = async function (event, context) {
     const data = await response.json();
     console.log("RAG Response:", data);
 
-    const cleanedReply = data?.answer?.trim() || "I am civic, your legislative information assistant. How can I help you understand Kenyan legislation and policy today?";
+    const cleanedReply = data?.answer?.trim() || "Hello! I'm Car&Gen.AI, the official Car and General assistant. Ask me about Car & General products, services, branches, contact information, warranties, or spare parts.";
 
     return {
       statusCode: 200,
