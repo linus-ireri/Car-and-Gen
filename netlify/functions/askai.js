@@ -97,7 +97,7 @@ async function queryLlmWithContext(userMessage, context) {
   try {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
-      { model: "mistralai/mistral-small-3.2-24b-instruct:free", messages },
+      { model: "openai/gpt-oss-120b:free", messages },
       {
         headers: {
           "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
@@ -147,7 +147,7 @@ async function queryLlmFallback(userMessage) {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "mistralai/mistral-7b-instruct:free",
+        model: "openai/gpt-oss-120b:free",
         messages
       },
       {
