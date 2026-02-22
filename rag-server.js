@@ -30,15 +30,7 @@ app.use(limiter);
 
 let vectorStore, embeddings;
 
-// ✅ Roman numeral mapping (1–30)
-const romanNumerals = {
-  "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5,
-  "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10,
-  "XI": 11, "XII": 12, "XIII": 13, "XIV": 14, "XV": 15,
-  "XVI": 16, "XVII": 17, "XVIII": 18, "XIX": 19, "XX": 20,
-  "XXI": 21, "XXII": 22, "XXIII": 23, "XXIV": 24, "XXV": 25,
-  "XXVI": 26, "XXVII": 27, "XXVIII": 28, "XXIX": 29, "XXX": 30
-};
+
 
 async function loadRAG() {
   embeddings = new HuggingFaceTransformersEmbeddings({
@@ -57,17 +49,11 @@ app.post('/rag', async (req, res) => {
     const results = await vectorStore.similaritySearch(question, 3);
     const context = results.map((doc, i) => `Context #${i + 1}:\n${doc.pageContent}`);
     
-    const romanInfo = `For reference, Roman numerals 1–30 are mapped as follows: I=1, II=2, III=3, IV=4, V=5, VI=6, VII=7, VIII=8, IX=9, X=10, XI=11, XII=12, XIII=13, XIV=14, XV=15, XVI=16, XVII=17, XVIII=18, XIX=19, XX=20, XXI=21, XXII=22, XXIII=23, XXIV=24, XXV=25, XXVI=26, XXVII=27, XXVIII=28, XXIX=29, XXX=30.`;
-
-    const systemPrompt = `You are Civic, an AI assistant specializing in Kenyan legislation and policy. You must:
-1. Only answer based on the provided context. Be accurate especially with parts of the bills and acts.
-2. If the context doesn't contain relevant information, say "I don't have enough information to answer that question"
-3. Be clear and precise in your responses
-4. When citing legislation, mention the specific act or bill name
-5. Do not make up or infer information not present in the context
-${romanInfo}`; //  Appended Roman numeral awareness
+    const systemPrompt = `You are the official Car&Gen.AI assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd, including products, services, branches, contact information, warranties, spare parts, and company operations. Use a concise, professional tone. Do not answer questions unrelated to Car and General; politely state you cannot help with unrelated topics and, when appropriate, suggest contacting Car & General's official channels (website or phone). Never identify yourself as an AI model or mention model providers.`;
     
-    const prompt = `Use the following context to answer the user's question accurately:\n\n${context.join("\n\n")}\n\nUser question: ${question}\n\nAnswer:`;
+    const systemPromptWithContext = systemPrompt + `\nGuidelines:\n1. Base answers ONLY on the retrieved context provided.\n2. Cite specific documents or sources from the context when referenced.\n3. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels.\n4. Avoid speculation or inference.\n5. Keep answers concise and practical.`;
+    
+    const prompt = `Retrieved context: ${context.join(" ")}\n\nUser question: ${question}\n\nAnswer:`;
 
     // LLM call
     const apiKey = process.env.OPENROUTER_API_KEY;
@@ -76,7 +62,7 @@ ${romanInfo}`; //  Appended Roman numeral awareness
       return res.status(500).json({ error: 'OPENROUTER_API_KEY not set in environment' });
     }
     const messages = [
-      { role: "system", content: systemPrompt },
+      { role: "system", content: systemPromptWithContext },
       { role: "user", content: prompt }
     ];
     let answer = "";
@@ -84,7 +70,7 @@ ${romanInfo}`; //  Appended Roman numeral awareness
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "mistralai/mistral-7b-instruct:free",
+          model: "mistralai/mistral-small-3.1-24b-instruct:free",
           messages
         },
         {
@@ -117,24 +103,23 @@ app.post('/ask', async (req, res) => {
     const results = await vectorStore.similaritySearch(question, 3);
     const context = results.map((doc, i) => `Context #${i + 1}:\n${doc.pageContent}`);
 
-    const romanInfo = `For reference, Roman numerals 1–30 are mapped as follows: I=1, II=2, III=3, IV=4, V=5, VI=6, VII=7, VIII=8, IX=9, X=10, XI=11, XII=12, XIII=13, XIV=14, XV=15, XVI=16, XVII=17, XVIII=18, XIX=19, XX=20, XXI=21, XXII=22, XXIII=23, XXIV=24, XXV=25, XXVI=26, XXVII=27, XXVIII=28, XXIX=29, XXX=30.`;
+    const systemPrompt = `You are the official Car&Gen.AI assistant for Car and General Kenya Ltd.
+     Your role is to answer questions ONLY about Car and General Kenya Ltd,
+      including products, services, branches, contact information, warranties, spare parts, and company operations.
+       Use a concise, professional tone. Do not answer questions unrelated to Car and General;
+        politely state you cannot help with unrelated topics and, when appropriate, suggest contacting Car & General's official channels (website or phone).
+         Never identify yourself as an AI model or mention model providers.`;
+    
+    const systemPromptWithContext = systemPrompt + `\nGuidelines:\n1. Base answers ONLY on the retrieved context provided.\n2. Cite specific documents or sources from the context when referenced.\n3. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels.\n4. Avoid speculation or inference.\n5. Keep answers concise and practical.`;
 
-    const systemPrompt = `You are Civic, an AI assistant specializing in Kenyan legislation and policy. You must:
-1. Only answer based on the provided context
-2. If the context doesn't contain relevant information, say "I don't have enough information to answer that question"
-3. Be clear and precise in your responses
-4. When citing legislation, mention the specific act or bill name
-5. Do not make up or infer information not present in the context
-${romanInfo}`; // ✅ Appended Roman numeral awareness
-
-    const prompt = `Use the following context to answer the user's question accurately:\n\n${context.join("\n\n")}\n\nUser question: ${question}\n\nAnswer:`;
+    const prompt = `Retrieved context: ${context.join(" ")}\n\nUser question: ${question}\n\nAnswer:`;
 
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) {
       return res.status(500).json({ error: 'OPENROUTER_API_KEY not set in environment' });
     }
     const messages = [
-      { role: "system", content: systemPrompt },
+      { role: "system", content: systemPromptWithContext },
       { role: "user", content: prompt }
     ];
 
@@ -142,7 +127,7 @@ ${romanInfo}`; // ✅ Appended Roman numeral awareness
     try {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
-        { model: "mistralai/mistral-small-3.2-24b-instruct:free", messages },
+        { model: "mistralai/mistral-small-3.1-24b-instruct:free", messages },
         {
           headers: { "Authorization": `Bearer ${apiKey}`, "Content-Type": "application/json" },
           timeout: 20000

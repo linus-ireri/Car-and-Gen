@@ -11,15 +11,11 @@ import path from "path";
 // 📁 SOURCE FILES & CONFIG
 // ===============================
 const pdfPaths = [
-  "./docs/ComputerMisuseandCybercrimesActNo5of2018.pdf",
-  "./docs/Privatization Act (1) 2025.pdf",
-  "./docs/BasicEducationActNo_14of2013.pdf",
-  "./docs/Media Council Act - Act No. 46 of 2013.pdf",
-  "./docs/TheComputerMisuseandCybercrime_Amendment_Bill_2024.pdf"
+  "./docs/Car_and_General_RAG.pdf",
 ];
 
 const urls = [
-  "https://www.kra.go.ke/en/helping-taxpayers/faqs"
+  "https://cargen.com"
 ];
 
 const VECTOR_STORE_PATH = "./vector_store";
