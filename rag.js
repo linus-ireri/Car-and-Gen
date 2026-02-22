@@ -15,7 +15,7 @@ async function main() {
   const vectorStore = await HNSWLib.load("vector_store", embeddings);
 
   // 🔍 Example question (replace or pass dynamically)
-  const question = "What does Section 4(2) of the Privatization Act 2025 state?";
+  const question = "What products and services does Car and General Kenya Ltd offer?";
 
   console.log("\n🔎 Retrieving relevant context...");
   const results = await vectorStore.similaritySearch(question, 5);
@@ -31,16 +31,17 @@ async function main() {
 
   // 🧠 Strict, structured prompt to prevent hallucination
   const prompt = `
-You are a precise legal AI assistant. Your job is to answer the user's question *strictly and only* based on the provided context.
+You are the official Car&Gen.AI assistant for Car and General Kenya Ltd. Your job is to answer the user's question *strictly and only* based on the provided context about Car and General.
 
 If the answer cannot be found exactly in the context, respond with:
-"Not found in the retrieved context."
+"I don't have that information in my knowledge base. Please contact Car & General's official channels for assistance."
 
 Follow these rules:
 - Do NOT invent or assume information.
-- Quote exact sections, clauses, or language when available.
+- Quote exact information about products, services, branches, warranties when available.
 - Never mix information from outside the retrieved context.
-- Maintain a professional and factual tone.
+- Maintain a professional, helpful, and factual tone.
+- Always reference Car & General Kenya Ltd when answering.
 
 -----------------------
 Retrieved Context:
@@ -63,12 +64,12 @@ Answer:
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "mistralai/mistral-7b-instruct:free",
+        model: "openai/gpt-oss-120b:free",
         messages: [
-          { role: "system", content: "You are a factual and grounded AI assistant." },
+          { role: "system", content: "You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Answer questions accurately based only on provided context about Car and General's products, services, and operations." },
           { role: "user", content: prompt }
         ],
-        temperature: 0.0, // 🔒 ensures deterministic factuality
+        temperature: 0.1, // 🔒 ensures factuality with minimal variation
         max_tokens: 500
       },
       {

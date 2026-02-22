@@ -86,7 +86,10 @@ async function queryRagServer(userMessage) {
  * @returns {Promise<object>} The LLM's response.
  */
 async function queryLlmWithContext(userMessage, context) {
-  const systemPrompt = SYSTEM_PROMPT + `\nGuidelines:\n1. Base answers ONLY on the retrieved context provided.\n2. Cite specific documents or sources from the context when referenced.\n3. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels.\n4. Avoid speculation or inference.\n5. Keep answers concise and practical.`;
+  const systemPrompt = SYSTEM_PROMPT + `\nGuidelines:\n1. Base answers ONLY on the retrieved context provided.\n
+  2. Cite specific documents or sources from the context when referenced.\n
+  3. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels.\n
+  4. Avoid speculation or inference.\n5. Keep answers concise and practical.`;
 
   const messages = [
     { role: "system", content: systemPrompt },
