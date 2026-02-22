@@ -145,7 +145,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "openai/gpt-oss-120b:free",
+          model: "mistralai/mistral-small-3.1-24b-instruct:free",
           messages
         },
         {
@@ -231,7 +231,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "openai/gpt-oss-120b:free",
+          model: "mistralai/mistral-small-3.1-24b-instruct:free",
           messages
         },
         {
