@@ -22,6 +22,11 @@ const commonQueries = {
   "help": "I can help you with Car & General questions. Ask about our products, service centres, branches, contact information, warranties, or spare parts."
 };
 
+// Lino AI canned responses (fallback / cached QA). If you have a separate
+// source for Lino-specific Q&A, load or replace this object accordingly.
+const linoAIResponses = {
+  ...commonQueries
+};
 
 exports.handler = async function(event, context) {
   // Webhook verification (GET request from Meta)
