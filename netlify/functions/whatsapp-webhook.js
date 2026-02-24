@@ -13,6 +13,7 @@ const greetingResponses = {
   "good evening": "Good evening! Ask me about Car & General products, branches, contact info, warranties, or spare parts."
 };
 
+
 // Common Car & General queries - basic info only, detailed answers come from RAG
 const commonQueries = {
   "what do you do": "I assist with questions about Car and General Kenya Ltd, including products, services, branches, contacts, warranties, and spare parts.",
@@ -35,6 +36,7 @@ exports.handler = async function(event, context) {
       };
     }
 
+    
     if (params["hub.mode"] === "subscribe" && params["hub.verify_token"] === VERIFY_TOKEN) {
       return {
         statusCode: 200,
