@@ -145,7 +145,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "mistralai/mistral-small-3.1-24b-instruct:free",
+          model: "arcee-ai/trinity-large-preview:free",
           messages
         },
         {
@@ -188,7 +188,12 @@ async function processMessage(message, from) {
         if (!process.env.OPENROUTER_API_KEY) {
           throw new Error("OPENROUTER_API_KEY not set in environment");
         }
-        const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Your role is to answer questions ONLY about Car and General Kenya Ltd, including products, services, branches, contact information, warranties, spare parts, and company operations. Base answers ONLY on the retrieved context provided. If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels. Never identify yourself as an AI model or mention model providers.`;
+        const systemPrompt = `You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Your role is to answer
+         questions ONLY about Car and General Kenya Ltd, including products,
+         services, branches, contact information, warranties, spare parts,
+          and company operations. Base answers ONLY on the retrieved context provided. 
+          If the context lacks relevant information, say "I don't have enough information about that in my knowledge base" and offer to direct the user to Car & General's official channels.
+           Never identify yourself as an AI model or mention model providers.`;
         const messages = [
           { role: "system", content: systemPrompt },
           { role: "user", content: `Retrieved context: ${Array.isArray(retrievedContext) ? retrievedContext.join(" ") : retrievedContext}` },
@@ -231,7 +236,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "mistralai/mistral-small-3.1-24b-instruct:free",
+          model: "arcee-ai/trinity-large-preview:free",
           messages
         },
         {
