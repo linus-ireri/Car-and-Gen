@@ -22,6 +22,7 @@ const commonQueries = {
   "help": "I can help you with Car & General questions. Ask about our products, service centres, branches, contact information, warranties, or spare parts."
 };
 
+
 exports.handler = async function(event, context) {
   // Webhook verification (GET request from Meta)
   if (event.httpMethod === "GET") {
@@ -36,7 +37,7 @@ exports.handler = async function(event, context) {
       };
     }
 
-    
+
     if (params["hub.mode"] === "subscribe" && params["hub.verify_token"] === VERIFY_TOKEN) {
       return {
         statusCode: 200,
