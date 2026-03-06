@@ -14,6 +14,7 @@ const greetingResponses = {
 };
 
 
+
 // Common Car & General queries - basic info only, detailed answers come from RAG
 const commonQueries = {
   "what do you do": "I assist with questions about Car and General Kenya Ltd, including products, services, branches, contacts, warranties, and spare parts.",
