@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Initialization ---
   initializeUI();
+  
 
   // --- UI Initialization ---
   function initializeUI() {
