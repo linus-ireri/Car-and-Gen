@@ -64,7 +64,7 @@ Answer:
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "arcee-ai/trinity-large-preview:free",
+        model: "google/gemma-4-26b-a4b-it:free",
         messages: [
           { role: "system", content: "You are Car&Gen.AI, the official assistant for Car and General Kenya Ltd. Answer questions accurately based only on provided context about Car and General's products, services, and operations." },
           { role: "user", content: prompt }
