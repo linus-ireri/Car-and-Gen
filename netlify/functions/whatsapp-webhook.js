@@ -154,7 +154,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "tencent/hy3-preview:free",
+          model: "nvidia/nemotron-3-nano-30b-a3b:free",
           messages
         },
         {
@@ -245,7 +245,7 @@ async function processMessage(message, from) {
       const response = await axios.post(
         "https://openrouter.ai/api/v1/chat/completions",
         {
-          model: "tencent/hy3-preview:free",
+          model: "nvidia/nemotron-3-nano-30b-a3b:free",
           messages
         },
         {

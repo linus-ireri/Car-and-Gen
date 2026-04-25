@@ -100,7 +100,7 @@ async function queryLlmWithContext(userMessage, context) {
   try {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
-      { model: "tencent/hy3-preview:free", messages },
+      { model: "nvidia/nemotron-3-nano-30b-a3b:free", messages },
       {
         headers: {
           "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
@@ -150,7 +150,7 @@ async function queryLlmFallback(userMessage) {
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "tencent/hy3-preview:free",
+        model: "nvidia/nemotron-3-nano-30b-a3b:free",
         messages
       },
       {
